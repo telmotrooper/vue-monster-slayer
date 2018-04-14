@@ -1,0 +1,74 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true,
+        "jquery": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "rules": {
+		"camelcase": "warn",
+		"eol-last": [
+			"warn",
+			"always"
+		],
+		"indent": [
+			"warn",
+			"tab"
+		],
+		"keyword-spacing": [
+			"warn",
+			{
+				"overrides": {
+					"catch": {
+						"after": false
+					},
+					"if": {
+						"after": false
+					},
+					"for": {
+						"after": false
+					},
+					"while": {
+						"after": false
+					}
+				}
+			}
+		],
+		"quotes": [
+			"warn",
+			"double",
+			{
+				"allowTemplateLiterals": true
+			}
+		],
+		"semi": [
+			"warn",
+			"always"
+		],
+		"space-before-blocks": "warn",
+		"object-curly-spacing": [
+			"warn",
+			"never"
+		],
+		"space-in-parens": [
+			"warn",
+			"never"
+		],
+		"space-infix-ops": [
+			"error",
+			{
+				"int32Hint": false
+			}
+		],
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-unreachable": "warn",
+		"no-var": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn"
+    }
+}
