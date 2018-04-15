@@ -6,15 +6,17 @@ window.onload = function() {
 			log: [],
 
 			player: {
-				name: "Hero",
+				name: "HERO",
 				health: 100,
-				strength: 20
+				strength: 20,
+				intelligence: 25
 			},
 
 			monster: {
-				name: "Goblin",
+				name: "GOBLIN",
 				health: 100,
-				strength: 15
+				strength: 15,
+				intelligence: 10
 			},
 		},
 		computed: {
@@ -34,7 +36,6 @@ window.onload = function() {
 				this.attackAction(this.monster, this.player);
 			},
 			attackAction: function(actor, target) {
-
 				let damage = getRandomInteger(1, actor.strength);
 
 				if(target.health - damage >= 0) {
@@ -45,6 +46,21 @@ window.onload = function() {
 
 				this.log.unshift(`<p>${actor.name} hits ${target.name} for ${damage}</p>`);
 			},
+			heal: function() {
+				this.healAction(this.player);
+				this.attackAction(this.monster, this.player);
+			},
+			healAction: function(actor) {
+				let extraHealth = getRandomInteger(1, actor.intelligence);
+				
+				if(actor.health + extraHealth <= 100) {
+					actor.health += extraHealth;
+				} else {
+					actor.health = 100;
+				}
+
+				this.log.unshift(`<p>${actor.name} heals himself for ${extraHealth}</p>`);
+			}
 		}
 	});
 };
