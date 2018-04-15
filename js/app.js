@@ -3,13 +3,16 @@ window.onload = function() {
 		el: "#app",
 		data: {
 			gameRunning: false,
+			log: [],
 
 			player: {
+				name: "Hero",
 				health: 100,
 				strength: 20
 			},
 
 			monster: {
+				name: "Goblin",
 				health: 100,
 				strength: 15
 			},
@@ -39,7 +42,9 @@ window.onload = function() {
 				} else {
 					target.health = 0;
 				}
-			}
+
+				this.log.unshift(`<p>${actor.name} hits ${target.name} for ${damage}</p>`);
+			},
 		}
 	});
 };

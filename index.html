@@ -50,9 +50,12 @@
 	<section class="row log" :class="{hidden: !gameRunning}">
 		<div class="small-12 columns">
 			<ul>
-				<li>
+				<template v-for="(entry, index) in log" v-if="index <= 6">
+					<li v-html="entry">
 
-				</li>
+					</li>
+				</template>
+				
 			</ul>
 		</div>
 	</section>
