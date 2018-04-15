@@ -4,51 +4,42 @@ window.onload = function() {
 		data: {
 			gameRunning: false,
 
-			playerHealth: 100,
-			monsterHealth: 100,
-			
+			health: {
+				player: 100,
+				monster: 100,
+			},
+
 			playerStrength: 20,
 			monsterStrength: 15
 		},
 		computed: {
 			playerHealthBar: function() {
 				return {
-					width: this.playerHealth + "%"
+					width: this.health.player + "%"
 				};
 			},
 			monsterHealthBar: function() {
 				return {
-					width: this.monsterHealth + "%"
+					width: this.health.monster + "%"
 				};
 			}
 		},
 		methods: {
 			newGame: function() {
 				this.gameRunning = true;
-				// this.playerHealth = 20;
 			},
 			attack: function() {
-				let damage = getRandomInteger(1, this.playerStrength);
+				this.attackAction("monster", this.playerStrength);
+				this.attackAction("player", this.monsterStrength);
+			},
+			attackAction: function(target, strength) {
+				let damage = getRandomInteger(1, strength);
 
-				if(this.monsterHealth - damage >= 0) {
-					this.monsterHealth -= damage;
+				if(this.health[target] - damage >= 0) {
+					this.health[target] -= damage;
 				} else {
-					this.monsterHealth = 0;
+					this.health[target] = 0;
 				}
-
-				console.log(`Player deals ${damage} damage to the monster.`);
-				console.log(`Monster has ${this.monsterHealth} health points left.`);
-
-				damage = getRandomInteger(1, this.monsterStrength);
-
-				if(this.playerHealth - damage >= 0) {
-					this.playerHealth -= damage;
-				} else {
-					this.playerHealth = 0;
-				}
-
-				console.log(`Monster deals ${damage} damage to the player.`);
-				console.log(`Player has ${this.playerHealth} health points left.`);
 			}
 		}
 	});
