@@ -45,9 +45,6 @@ window.onload = function() {
 					randomChoice = getRandomInteger(0,1);
 				}
 
-				console.log("Monster health: " + this.monster.health);
-				console.log("Choice value: " + randomChoice);
-
 				if(randomChoice) {
 					this.healAction(this.monster);
 				} else {
