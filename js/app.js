@@ -30,6 +30,11 @@ window.onload = function() {
 		methods: {
 			newGame: function() {
 				this.gameRunning = true;
+				
+				/* Resetting game */
+				this.log = [];
+				this.player.health = 100;
+				this.monster.health = 100;
 			},
 			attack: function() {
 				this.attackAction(this.player, this.monster);
@@ -60,6 +65,9 @@ window.onload = function() {
 				}
 
 				this.log.unshift(`<p>${actor.name} heals himself for ${extraHealth}</p>`);
+			},
+			giveUp: function() {
+				this.gameRunning = false;
 			}
 		}
 	});
