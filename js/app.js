@@ -119,7 +119,7 @@ window.onload = function() {
 			giveUp: function() {
 				this.log.unshift(`<p class="player-turn">${this.player.name} RUN AWAY</p>`);
 				this.gameRunning = false;
-				this.gameOverMessage = `YOU DECIDED TO RUN AWAY FORM THE ${this.monster.name}...`;
+				this.gameOverMessage = `YOU DECIDED TO RUN AWAY FROM THE ${this.monster.name}...`;
 			},
 
 			skip: function() {
