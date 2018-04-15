@@ -62,7 +62,13 @@ window.onload = function() {
 				if(randomChoice) {
 					this.healAction(this.monster);
 				} else {
-					this.attackAction(this.monster, this.player);
+					randomChoice = getRandomInteger(0,1);
+
+					if(randomChoice) {	// 50% chance of doing a normal attack
+						this.attackAction(this.monster, this.player);
+					} else {	// 50% chance of doing a special attack
+						this.specialAttackAction(this.monster, this.player);
+					}
 
 					this.endGame();
 				}
@@ -92,6 +98,34 @@ window.onload = function() {
 				}
 
 				this.log.unshift(`<p class="${cssClass}">${actor.name} hits ${target.name} for ${damage}</p>`);
+			},
+			specialAttack: function() {
+				this.specialAttackAction(this.player, this.monster);
+
+				if(!this.endGame()) {
+					this.monsterMove();
+				}
+			},
+			specialAttackAction: function(actor, target) {
+				let damage = Math.floor(getRandomInteger(1, actor.strength) * 1.5);
+
+				if(target.health - damage >= 0) {
+					target.health -= damage;
+				} else {
+					target.health = 0;
+				}
+
+				let cssClass = "";
+
+				if(actor == this.player) {
+					cssClass = "player-turn";
+				} else {
+					cssClass = "monster-turn";
+				}
+
+				this.log.unshift(`<p class="${cssClass}">
+					${actor.name} hits ${target.name} for ${damage} (with a special attack)
+				</p>`);
 			},
 			heal: function() {
 				this.healAction(this.player);
