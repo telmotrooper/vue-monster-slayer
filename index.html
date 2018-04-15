@@ -36,6 +36,12 @@
 	</section>
 	<section class="row controls" :class="{hidden: gameRunning}">
 		<div class="small-12 columns">
+			<template>
+				<span :class="{hidden: log <= 0}">
+					{{gameOverMessage}}
+					<br>
+				</span>
+			</template>
 			<button id="start-game" @click="newGame()">START NEW GAME</button>
 		</div>
 	</section>
@@ -44,6 +50,7 @@
 			<button id="attack" @click="attack()">ATTACK</button>
 			<button id="special-attack">SPECIAL ATTACK</button>
 			<button id="heal" @click="heal()">HEAL</button>
+			<button id="give-up" @click="skip()">SKIP</button>
 			<button id="give-up" @click="giveUp()">GIVE UP</button>
 		</div>
 	</section>
@@ -51,9 +58,7 @@
 		<div class="small-12 columns">
 			<ul>
 				<template v-for="(entry, index) in log" v-if="index <= 6">
-					<li v-html="entry">
-
-					</li>
+					<li v-html="entry"></li>
 				</template>
 				
 			</ul>

@@ -3,6 +3,7 @@ window.onload = function() {
 		el: "#app",
 		data: {
 			gameRunning: false,
+			gameOverMessage: "",
 			log: [],
 
 			player: {
@@ -28,6 +29,19 @@ window.onload = function() {
 			}
 		},
 		methods: {
+			endGame: function() {
+				if(this.player.health <= 0) {
+					this.gameOverMessage = `YOU'VE BEEN KILLED BY THE ${this.monster.name}...`;
+					this.gameRunning = false;
+					return true;
+				} else if(this.monster.health <= 0) {
+					this.gameOverMessage = `YOU'VE KILLED THE ${this.monster.name}!`;
+					this.gameRunning = false;
+					return true;
+				} else {
+					return false;
+				}
+			},
 			newGame: function() {
 				this.gameRunning = true;
 				
@@ -49,11 +63,16 @@ window.onload = function() {
 					this.healAction(this.monster);
 				} else {
 					this.attackAction(this.monster, this.player);
+
+					this.endGame();
 				}
 			},
 			attack: function() {
 				this.attackAction(this.player, this.monster);
-				this.monsterMove();
+
+				if(!this.endGame()) {
+					this.monsterMove();
+				}
 			},
 			attackAction: function(actor, target) {
 				let damage = getRandomInteger(1, actor.strength);
@@ -64,7 +83,15 @@ window.onload = function() {
 					target.health = 0;
 				}
 
-				this.log.unshift(`<p>${actor.name} hits ${target.name} for ${damage}</p>`);
+				let cssClass = "";
+
+				if(actor == this.player) {
+					cssClass = "player-turn";
+				} else {
+					cssClass = "monster-turn";
+				}
+
+				this.log.unshift(`<p class="${cssClass}">${actor.name} hits ${target.name} for ${damage}</p>`);
 			},
 			heal: function() {
 				this.healAction(this.player);
@@ -79,10 +106,25 @@ window.onload = function() {
 					actor.health = 100;
 				}
 
-				this.log.unshift(`<p>${actor.name} heals himself for ${extraHealth}</p>`);
+				let cssClass = "";
+
+				if(actor == this.player) {
+					cssClass = "player-turn";
+				} else {
+					cssClass = "monster-turn";
+				}
+
+				this.log.unshift(`<p class=${cssClass}>${actor.name} heals himself for ${extraHealth}</p>`);
 			},
 			giveUp: function() {
+				this.log.unshift(`<p class="player-turn">${this.player.name} RUN AWAY</p>`);
 				this.gameRunning = false;
+				this.gameOverMessage = `YOU DECIDED TO RUN AWAY FORM THE ${this.monster.name}...`;
+			},
+
+			skip: function() {
+				this.log.unshift(`<p class="player-turn">${this.player.name} SKIPPED HIS TURN</p>`);
+				this.monsterMove();
 			}
 		}
 	});
