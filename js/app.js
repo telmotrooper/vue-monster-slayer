@@ -4,24 +4,22 @@ window.onload = function() {
 		data: {
 			gameRunning: false,
 
-			health: {
-				player: 100,
-				monster: 100,
+			player: {
+				health: 100,
+				strength: 20
 			},
 
-			playerStrength: 20,
-			monsterStrength: 15
+			monster: {
+				health: 100,
+				strength: 15
+			},
 		},
 		computed: {
 			playerHealthBar: function() {
-				return {
-					width: this.health.player + "%"
-				};
+				return {width: this.player.health + "%"};
 			},
 			monsterHealthBar: function() {
-				return {
-					width: this.health.monster + "%"
-				};
+				return {width: this.monster.health + "%"};
 			}
 		},
 		methods: {
@@ -29,16 +27,17 @@ window.onload = function() {
 				this.gameRunning = true;
 			},
 			attack: function() {
-				this.attackAction("monster", this.playerStrength);
-				this.attackAction("player", this.monsterStrength);
+				this.attackAction(this.player, this.monster);
+				this.attackAction(this.monster, this.player);
 			},
-			attackAction: function(target, strength) {
-				let damage = getRandomInteger(1, strength);
+			attackAction: function(actor, target) {
 
-				if(this.health[target] - damage >= 0) {
-					this.health[target] -= damage;
+				let damage = getRandomInteger(1, actor.strength);
+
+				if(target.health - damage >= 0) {
+					target.health -= damage;
 				} else {
-					this.health[target] = 0;
+					target.health = 0;
 				}
 			}
 		}
