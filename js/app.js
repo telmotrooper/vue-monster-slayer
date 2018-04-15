@@ -16,7 +16,7 @@ window.onload = function() {
 				name: "GOBLIN",
 				health: 100,
 				strength: 15,
-				intelligence: 10
+				intelligence: 15
 			},
 		},
 		computed: {
@@ -36,9 +36,27 @@ window.onload = function() {
 				this.player.health = 100;
 				this.monster.health = 100;
 			},
+			monsterMove: function() {
+				let randomChoice = 0;
+
+				if(this.monster.health <= 50) {	// 66,66% chance of healing if life is under 50%
+					randomChoice = getRandomInteger(0,2);
+				} else if(this.monster.health <= 75) {	// 50% chance of healing if life is under 75%
+					randomChoice = getRandomInteger(0,1);
+				}
+
+				console.log("Monster health: " + this.monster.health);
+				console.log("Choice value: " + randomChoice);
+
+				if(randomChoice) {
+					this.healAction(this.monster);
+				} else {
+					this.attackAction(this.monster, this.player);
+				}
+			},
 			attack: function() {
 				this.attackAction(this.player, this.monster);
-				this.attackAction(this.monster, this.player);
+				this.monsterMove();
 			},
 			attackAction: function(actor, target) {
 				let damage = getRandomInteger(1, actor.strength);
@@ -53,7 +71,7 @@ window.onload = function() {
 			},
 			heal: function() {
 				this.healAction(this.player);
-				this.attackAction(this.monster, this.player);
+				this.monsterMove();
 			},
 			healAction: function(actor) {
 				let extraHealth = getRandomInteger(1, actor.intelligence);
