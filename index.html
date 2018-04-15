@@ -47,7 +47,7 @@
 			<button id="give-up" @click="giveUp()">GIVE UP</button>
 		</div>
 	</section>
-	<section class="row log" :class="{hidden: !gameRunning}">
+	<section class="row log" :class="{hidden: log.length <= 0}">
 		<div class="small-12 columns">
 			<ul>
 				<template v-for="(entry, index) in log" v-if="index <= 6">
